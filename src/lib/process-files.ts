@@ -1,6 +1,7 @@
 import { optimize } from 'svgo';
 import { getFileContentsInDirectory, writeFiles } from '../utils/file-utils';
 import type { SavedFile } from '../types/files';
+import type { Logger } from '../types/logger';
 
 const FILL_REGEX = /fill="#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})"/gm;
 
@@ -23,7 +24,6 @@ const replaceFill = (files: SavedFile[]): SavedFile[] => {
 const optimizeFiles = (files: SavedFile[]): SavedFile[] => {
   return files.map(item => {
     const { data } = optimize(item.content, {
-      path: item.filePath,
       multipass: true,
       plugins: [
         'cleanupAttrs',
@@ -62,12 +62,20 @@ const optimizeFiles = (files: SavedFile[]): SavedFile[] => {
   });
 };
 
-export async function processFiles(dirPath: string): Promise<void[]> {
+export async function processFiles(dirPath: string, logger: Logger): Promise<void[]> {
   const fileContents = await getFileContentsInDirectory(dirPath);
+
+  logger.info(
+    `Stage 3/4: Processing ${fileContents.length} SVG files (fill normalization + SVGO)...`,
+  );
 
   const replacedFillContent = replaceFill(fileContents);
 
   const clearedContent = optimizeFiles(replacedFillContent);
 
-  return writeFiles(clearedContent);
+  const result = await writeFiles(clearedContent);
+
+  logger.info(`Stage 3/4 complete — ${clearedContent.length} files optimized`);
+
+  return result;
 }
