@@ -1,4 +1,4 @@
-# figma-exporter
+# figma-svg-exporter
 
 Export SVG icons from a Figma file to a local directory — with SVGO optimization, `fill` → `currentColor` normalization, and automatic TypeScript type generation.
 
@@ -34,10 +34,10 @@ npm install --save-dev figma-exporter
 ```js
 // figma-exporter.config.js
 export default {
-  fileId: 'your-figma-file-id',  // from the Figma URL
+  fileId: 'your-figma-file-id', // from the Figma URL
   outputDir: './src/assets/icons',
-  canvas: 'Icons',               // page name in Figma
-  frame: 'Export',               // frame name inside that page
+  canvas: 'Icons', // page name in Figma
+  frame: 'Export', // frame name inside that page
   clearOutputDir: true,
 };
 ```
@@ -64,18 +64,18 @@ bun figma-exporter
 figma-exporter [options]
 ```
 
-| Flag | Short | Default | Description |
-|---|---|---|---|
-| `--config <path>` | `-c` | auto-discovered | Path to config file |
-| `--token <token>` | `-t` | `$FIGMA_TOKEN` | Figma personal access token |
-| `--file-id <id>` | `-f` | — | Figma file ID (required) |
-| `--output <dir>` | `-o` | `./svg-icons` | Output directory |
-| `--canvas <name>` | | — | Canvas (page) name to scope the search |
-| `--frame <name>` | | — | Frame name within the canvas |
-| `--clear` | | `false` | Delete all files in output dir before export |
-| `--no-log` | | — | Suppress all log output |
-| `--version` | `-v` | | Print version |
-| `--help` | `-h` | | Display help |
+| Flag              | Short | Default         | Description                                  |
+| ----------------- | ----- | --------------- | -------------------------------------------- |
+| `--config <path>` | `-c`  | auto-discovered | Path to config file                          |
+| `--token <token>` | `-t`  | `$FIGMA_TOKEN`  | Figma personal access token                  |
+| `--file-id <id>`  | `-f`  | —               | Figma file ID (required)                     |
+| `--output <dir>`  | `-o`  | `./svg-icons`   | Output directory                             |
+| `--canvas <name>` |       | —               | Canvas (page) name to scope the search       |
+| `--frame <name>`  |       | —               | Frame name within the canvas                 |
+| `--clear`         |       | `false`         | Delete all files in output dir before export |
+| `--no-log`        |       | —               | Suppress all log output                      |
+| `--version`       | `-v`  |                 | Print version                                |
+| `--help`          | `-h`  |                 | Display help                                 |
 
 CLI flags override values from the config file. Advanced options (retry, concurrency, etc.) are config-file-only.
 
@@ -95,22 +95,22 @@ A custom path can be set with `--config ./path/to/config.js`.
 
 ### Full config reference
 
-| Option | Type | Default | CLI flag | Description |
-|---|---|---|---|---|
-| `token` | `string` | — | `--token` | Figma personal access token (alternative to env var) |
-| `fileId` | `string` | — | `--file-id` | Figma file ID (found in the file URL) |
-| `outputDir` | `string` | `./svg-icons` | `--output` | Directory where SVG files are written |
-| `canvas` | `string` | — | `--canvas` | Canvas (page) name to scope the search |
-| `frame` | `string` | — | `--frame` | Frame name within the canvas |
-| `entityTypeForExport` | `'components' \| 'instances' \| Array` | `'components'` | — | Which node types to export |
-| `component` | `string \| (node) => boolean` | — | — | Filter entities by name or a custom predicate |
-| `batchSize` | `number` | `100` | — | Nodes per `fileImages` API request |
-| `clearOutputDir` | `boolean` | `false` | `--clear` | Delete existing files before writing |
-| `retryAttempts` | `number` | `3` | — | Max retry attempts on API 429 responses |
-| `retryDelay` | `number` | `1000` | — | Initial backoff delay in ms (doubles each attempt) |
-| `requestDelay` | `number` | `0` | — | Delay in ms between sequential batch requests |
-| `downloadConcurrency` | `number` | `5` | — | Max concurrent SVG downloads |
-| `logger` | `Logger \| false \| null` | built-in | — | Custom logger or `false`/`null` to disable |
+| Option                | Type                                   | Default        | CLI flag    | Description                                          |
+| --------------------- | -------------------------------------- | -------------- | ----------- | ---------------------------------------------------- |
+| `token`               | `string`                               | —              | `--token`   | Figma personal access token (alternative to env var) |
+| `fileId`              | `string`                               | —              | `--file-id` | Figma file ID (found in the file URL)                |
+| `outputDir`           | `string`                               | `./svg-icons`  | `--output`  | Directory where SVG files are written                |
+| `canvas`              | `string`                               | —              | `--canvas`  | Canvas (page) name to scope the search               |
+| `frame`               | `string`                               | —              | `--frame`   | Frame name within the canvas                         |
+| `entityTypeForExport` | `'components' \| 'instances' \| Array` | `'components'` | —           | Which node types to export                           |
+| `component`           | `string \| (node) => boolean`          | —              | —           | Filter entities by name or a custom predicate        |
+| `batchSize`           | `number`                               | `100`          | —           | Nodes per `fileImages` API request                   |
+| `clearOutputDir`      | `boolean`                              | `false`        | `--clear`   | Delete existing files before writing                 |
+| `retryAttempts`       | `number`                               | `3`            | —           | Max retry attempts on API 429 responses              |
+| `retryDelay`          | `number`                               | `1000`         | —           | Initial backoff delay in ms (doubles each attempt)   |
+| `requestDelay`        | `number`                               | `0`            | —           | Delay in ms between sequential batch requests        |
+| `downloadConcurrency` | `number`                               | `5`            | —           | Max concurrent SVG downloads                         |
+| `logger`              | `Logger \| false \| null`              | built-in       | —           | Custom logger or `false`/`null` to disable           |
 
 **Example with all options:**
 
@@ -135,8 +135,8 @@ export default {
 
 ## Environment variables
 
-| Variable | Description |
-|---|---|
+| Variable      | Description                                                                                     |
+| ------------- | ----------------------------------------------------------------------------------------------- |
 | `FIGMA_TOKEN` | Figma personal access token. Lower priority than `--token`, higher than `token` in config file. |
 
 ## Programmatic API

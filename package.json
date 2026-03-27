@@ -1,5 +1,5 @@
 {
-  "name": "figma-exporter",
+  "name": "figma-svg-exporter",
   "packageManager": "bun",
   "description": "Export SVG icons from Figma with SVGO optimization and TypeScript type generation",
   "author": "Slava Cherkesov",
@@ -14,7 +14,7 @@
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "bin": {
-    "figma-exporter": "dist/cli.js"
+    "figma-svg-exporter": "dist/cli.js"
   },
   "files": [
     "dist"
