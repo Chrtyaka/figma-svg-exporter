@@ -1,7 +1,6 @@
 import * as Figma from 'figma-js';
 import path from 'path';
 import { ExporterConfig } from './types/config';
-// import { createComponents } from './lib/create-components';
 import { downloadFiles } from './lib/download-files';
 import { importFiles } from './lib/import-files';
 import { processFiles } from './lib/process-files';

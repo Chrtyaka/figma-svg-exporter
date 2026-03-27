@@ -1,6 +1,5 @@
-import { lstat, readdir, readFile, writeFile, rename, mkdir } from 'fs/promises';
+import { lstat, readdir, readFile, writeFile, mkdir } from 'fs/promises';
 import { existsSync, readdirSync, rmSync } from 'fs';
-import { replaceFileExtension } from './replace-file-extension';
 import { SavedFileWithoutContent, SavedFile } from '../types/files';
 
 export async function getFilesFromDirectory(directory: string): Promise<SavedFileWithoutContent[]> {
@@ -46,14 +45,6 @@ export async function writeFiles(files: SavedFile[]): Promise<void[]> {
   const promises = files.map(item => {
     return writeFile(item.filePath, item.content);
   });
-
-  return Promise.all(promises);
-}
-
-export async function changeFileExtension(data: SavedFile[], extension: '.vue'): Promise<void[]> {
-  const promises = data.map(item =>
-    rename(item.filePath, replaceFileExtension(item.filePath, extension)),
-  );
 
   return Promise.all(promises);
 }
