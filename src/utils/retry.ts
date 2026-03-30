@@ -15,20 +15,26 @@ function is429(error: unknown): boolean {
   );
 }
 
-function getRetryDelay(error: unknown, attempt: number, initialDelay: number): number {
+const MAX_RETRYABLE_DELAY_MS = 60_000;
+
+function getRetryAfterMs(error: unknown): number | null {
   const retryAfter = (error as { response?: { headers?: { 'retry-after'?: string } } })?.response
     ?.headers?.['retry-after'];
 
-  if (retryAfter) {
-    const value = Number(retryAfter);
-    if (!isNaN(value) && value > 0) {
-      // If value looks like a Unix timestamp (seconds), compute relative delay
-      const nowSeconds = Date.now() / 1000;
-      if (value > nowSeconds) {
-        return Math.ceil((value - nowSeconds) * 1000);
-      }
-      return value * 1000;
-    }
+  if (!retryAfter) return null;
+
+  const value = Number(retryAfter);
+  if (isNaN(value) || value <= 0) return null;
+
+  const nowSeconds = Date.now() / 1000;
+  return value > nowSeconds ? Math.ceil((value - nowSeconds) * 1000) : value * 1000;
+}
+
+function getRetryDelay(error: unknown, attempt: number, initialDelay: number): number {
+  const retryAfterMs = getRetryAfterMs(error);
+
+  if (retryAfterMs !== null) {
+    return retryAfterMs;
   }
 
   return initialDelay * 2 ** (attempt - 1);
@@ -41,6 +47,11 @@ export async function withRetry<T>(fn: () => Promise<T>, options: RetryOptions):
     } catch (error) {
       if (!is429(error) || attempt === options.maxAttempts) throw error;
       const delay = getRetryDelay(error, attempt, options.initialDelay);
+      if (delay > MAX_RETRYABLE_DELAY_MS) {
+        throw new Error(
+          `Rate limited by Figma API. Retry-After is ${Math.ceil(delay / 1000)}s — aborting instead of waiting.`,
+        );
+      }
       options.onRetry?.(attempt, delay);
       await sleep(delay);
     }

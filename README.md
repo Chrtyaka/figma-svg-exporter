@@ -117,6 +117,7 @@ A custom path can be set with `--config ./path/to/config.js`.
 | `requestDelay`        | `number`                               | `0`            | —             | Delay in ms between sequential batch requests        |
 | `downloadConcurrency` | `number`                               | `5`            | —             | Max concurrent SVG downloads                         |
 | `typeName`            | `string`                               | `SvgIcons`     | `--type-name` | Name for the generated TypeScript union type         |
+| `skipExisting`        | `boolean`                              | `false`        | —             | Skip files that already exist in `outputDir`. Ignored when `clearOutputDir` is `true` |
 | `logger`              | `Logger \| false \| null`              | built-in       | —             | Custom logger or `false`/`null` to disable           |
 
 **Example with all options:**
@@ -139,8 +140,27 @@ export default {
   retryDelay: 2000,
   requestDelay: 200,
   downloadConcurrency: 10,
+  skipExisting: true,
 };
 ```
+
+## Rate limiting
+
+The Figma API enforces rate limits. If you hit them, the export will fail with an error showing the suggested retry delay.
+
+**To reduce the chance of being rate limited:**
+
+```js
+export default {
+  // ...
+  batchSize: 50,         // fewer nodes per API request
+  requestDelay: 1000,    // 1s pause between batch requests
+  downloadConcurrency: 3,
+  skipExisting: true,    // don't re-download files that already exist
+};
+```
+
+`skipExisting: true` is the most effective option for incremental updates — on repeat runs only new or renamed icons are fetched from Figma.
 
 ## Environment variables
 
@@ -165,7 +185,7 @@ await exportFiles(process.env.FIGMA_TOKEN!, {
 ### Exported types
 
 ```ts
-import type { Logger, LoggerOption } from "figma-exporter";
+import type { ExporterConfig, Logger, LoggerOption } from "figma-exporter";
 import { consoleLogger } from "figma-exporter";
 ```
 

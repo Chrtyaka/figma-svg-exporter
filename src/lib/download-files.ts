@@ -69,6 +69,17 @@ export async function downloadFiles(
     logger.info('Cleared output directory');
   }
 
+  const allItems = filesData.items;
+  let itemsToDownload = allItems;
+
+  if (config.skipExisting && !config.clearOutputDir) {
+    itemsToDownload = allItems.filter(item => !existsSync(`${config.outputDir}/${item.name}.svg`));
+    const skipped = allItems.length - itemsToDownload.length;
+    if (skipped > 0) {
+      logger.info(`Skipping ${skipped} already existing files`);
+    }
+  }
+
   const concurrency = config.downloadConcurrency ?? 5;
   const retryOptions: RetryOptions = {
     maxAttempts: config.retryAttempts ?? 3,
@@ -79,7 +90,7 @@ export async function downloadFiles(
       ),
   };
 
-  const imageFiles = await downloadInChunks(filesData.items, concurrency, retryOptions);
+  const imageFiles = await downloadInChunks(itemsToDownload, concurrency, retryOptions);
 
   const filesToSave: SavedFile[] = imageFiles.map(item => {
     return {
