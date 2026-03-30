@@ -1,3 +1,9 @@
+## [1.0.4](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.0.3...v1.0.4) (2026-03-30)
+
+### Bug Fixes
+
+* **types:** fix types and timestamps ([86c3aff](https://github.com/Chrtyaka/figma-svg-exporter/commit/86c3affea76bf1668cd744cbba302152c3db670a))
+
 ## [1.0.3](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.0.2...v1.0.3) (2026-03-30)
 
 ### Bug Fixes
