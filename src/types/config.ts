@@ -28,9 +28,16 @@ export type ExporterConfig = {
   downloadConcurrency?: number;
   /** Name for the generated TypeScript union type. Default: 'SvgIcons' */
   typeName?: string;
+  /** Skip downloading files that already exist in outputDir. Ignored when clearOutputDir is true. Default: false */
+  skipExisting?: boolean;
 };
 
 export type DownloadConfig = Pick<
   ExporterConfig,
-  'clearOutputDir' | 'outputDir' | 'retryAttempts' | 'retryDelay' | 'downloadConcurrency'
+  | 'clearOutputDir'
+  | 'outputDir'
+  | 'retryAttempts'
+  | 'retryDelay'
+  | 'downloadConcurrency'
+  | 'skipExisting'
 >;
