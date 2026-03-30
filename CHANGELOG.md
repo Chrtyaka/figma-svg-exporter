@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.0.1...v1.0.2) (2026-03-30)
+
+### Bug Fixes
+
+* fix typo ([142b5fb](https://github.com/Chrtyaka/figma-svg-exporter/commit/142b5fb57c26875110c88ce00c991cf13197af11))
+
 ## [1.0.1](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.0.0...v1.0.1) (2026-03-30)
 
 ### Bug Fixes
