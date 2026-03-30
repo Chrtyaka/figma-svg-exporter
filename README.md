@@ -1,6 +1,5 @@
 # figma-svg-exporter
 
-a
 Export SVG icons from a Figma file to a local directory — with SVGO optimization, `fill` → `currentColor` normalization, and automatic TypeScript type generation.
 
 ## What it does
