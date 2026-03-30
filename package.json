@@ -1,7 +1,6 @@
 {
   "name": "figma-svg-exporter",
-  "packageManager": "bun",
-  "description": "Export SVG icons from Figma with SVGO optimization and TypeScript type generation",
+  "description": "Export SVG assets from Figma with SVGO optimization and TypeScript type generation",
   "author": "Slava Cherkesov",
   "version": "0.0.0",
   "scripts": {
