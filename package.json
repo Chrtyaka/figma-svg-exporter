@@ -18,7 +18,11 @@
     "type-check": "tsc --noEmit",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "build": "bun run build.ts && tsc"
+    "build": "bun run build.ts && tsc",
+    "release": "semantic-release"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "commander": "^14.0.3",
@@ -40,7 +44,15 @@
     "oxlint": "^1.57.0",
     "ts-jest": "^29.4.0",
     "tsx": "^4.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "semantic-release": "^24.0.0",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/release-notes-generator": "^14.0.0",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/npm": "^12.0.0",
+    "@semantic-release/github": "^10.0.0",
+    "@semantic-release/git": "^10.0.0",
+    "conventional-changelog-conventionalcommits": "^8.0.0"
   },
   "peerDependencies": {
     "figma-js": "1.x",
