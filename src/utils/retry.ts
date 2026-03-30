@@ -26,8 +26,7 @@ function getRetryAfterMs(error: unknown): number | null {
   const value = Number(retryAfter);
   if (isNaN(value) || value <= 0) return null;
 
-  const nowSeconds = Date.now() / 1000;
-  return value > nowSeconds ? Math.ceil((value - nowSeconds) * 1000) : value * 1000;
+  return value * 1000;
 }
 
 function getRetryDelay(error: unknown, attempt: number, initialDelay: number): number {
@@ -49,7 +48,7 @@ export async function withRetry<T>(fn: () => Promise<T>, options: RetryOptions):
       const delay = getRetryDelay(error, attempt, options.initialDelay);
       if (delay > MAX_RETRYABLE_DELAY_MS) {
         throw new Error(
-          `Rate limited by Figma API. Retry-After is ${Math.ceil(delay / 1000)}s — aborting instead of waiting.`,
+          `Rate limited by Figma API. Retry-After is ${(delay / 3_600_000).toFixed(1)}h — aborting instead of waiting.`,
         );
       }
       options.onRetry?.(attempt, delay);
