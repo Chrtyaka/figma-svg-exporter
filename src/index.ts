@@ -35,9 +35,7 @@ export async function exportFiles(token: string, config: ExporterConfig) {
 
   await processFiles(outputDir, logger);
 
-  // await createComponents(outputDir, 'vue');
-
-  await generateFileNamesUnionType('SvgIcons', outputDir, logger);
+  await generateFileNamesUnionType(config.typeName ?? 'SvgIcons', outputDir, logger);
 
   logger.info('Export finished successfully');
 

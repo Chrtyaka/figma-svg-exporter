@@ -73,6 +73,7 @@ figma-exporter [options]
 | `--canvas <name>` |       | —               | Canvas (page) name to scope the search       |
 | `--frame <name>`  |       | —               | Frame name within the canvas                 |
 | `--clear`         |       | `false`         | Delete all files in output dir before export |
+| `--type-name <name>` |    | `SvgIcons`      | Name for the generated TypeScript union type |
 | `--no-log`        |       | —               | Suppress all log output                      |
 | `--version`       | `-v`  |                 | Print version                                |
 | `--help`          | `-h`  |                 | Display help                                 |
@@ -109,8 +110,9 @@ A custom path can be set with `--config ./path/to/config.js`.
 | `retryAttempts`       | `number`                               | `3`            | —           | Max retry attempts on API 429 responses              |
 | `retryDelay`          | `number`                               | `1000`         | —           | Initial backoff delay in ms (doubles each attempt)   |
 | `requestDelay`        | `number`                               | `0`            | —           | Delay in ms between sequential batch requests        |
-| `downloadConcurrency` | `number`                               | `5`            | —           | Max concurrent SVG downloads                         |
-| `logger`              | `Logger \| false \| null`              | built-in       | —           | Custom logger or `false`/`null` to disable           |
+| `downloadConcurrency` | `number`                               | `5`            | —                | Max concurrent SVG downloads                         |
+| `typeName`            | `string`                               | `SvgIcons`     | `--type-name`    | Name for the generated TypeScript union type         |
+| `logger`              | `Logger \| false \| null`              | built-in       | —                | Custom logger or `false`/`null` to disable           |
 
 **Example with all options:**
 
@@ -123,6 +125,8 @@ export default {
   frame: 'Export',
   entityTypeForExport: 'components',
   clearOutputDir: true,
+
+  typeName: 'IconName',
 
   // API resilience
   batchSize: 50,

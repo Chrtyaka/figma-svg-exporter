@@ -59,6 +59,7 @@ interface CliOptions {
   frame?: string;
   clear?: boolean;
   log: boolean; // false when --no-log is passed
+  typeName?: string;
 }
 
 async function run(options: CliOptions): Promise<void> {
@@ -98,6 +99,7 @@ async function run(options: CliOptions): Promise<void> {
     ...(options.frame != null && { frame: options.frame }),
     ...(options.clear && { clearOutputDir: true }),
     ...(options.log === false && { logger: false }),
+    ...(options.typeName != null && { typeName: options.typeName }),
   };
 
   // 5. Run export
@@ -126,6 +128,7 @@ program
   .option('--frame <name>', 'Frame name within the canvas to scope the search')
   .option('--clear', 'Delete all files in the output directory before exporting')
   .option('--no-log', 'Suppress all log output')
+  .option('--type-name <name>', 'Name for the generated TypeScript union type (default: SvgIcons)')
   .action(run);
 
 program.parse();
