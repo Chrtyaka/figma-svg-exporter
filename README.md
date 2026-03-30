@@ -1,5 +1,6 @@
 # figma-svg-exporter
 
+a
 Export SVG icons from a Figma file to a local directory — with SVGO optimization, `fill` → `currentColor` normalization, and automatic TypeScript type generation.
 
 ## What it does
@@ -12,7 +13,12 @@ Export SVG icons from a Figma file to a local directory — with SVGO optimizati
 **Output example** — alongside the SVG files, a `types.ts` is written to the output directory:
 
 ```ts
-export type SvgIcons = 'arrow-left' | 'arrow-right' | 'check' | 'close' | 'spinner';
+export type SvgIcons =
+  | "arrow-left"
+  | "arrow-right"
+  | "check"
+  | "close"
+  | "spinner";
 ```
 
 ## Installation
@@ -34,10 +40,10 @@ npm install --save-dev figma-exporter
 ```js
 // figma-exporter.config.js
 export default {
-  fileId: 'your-figma-file-id', // from the Figma URL
-  outputDir: './src/assets/icons',
-  canvas: 'Icons', // page name in Figma
-  frame: 'Export', // frame name inside that page
+  fileId: "your-figma-file-id", // from the Figma URL
+  outputDir: "./src/assets/icons",
+  canvas: "Icons", // page name in Figma
+  frame: "Export", // frame name inside that page
   clearOutputDir: true,
 };
 ```
@@ -119,14 +125,14 @@ A custom path can be set with `--config ./path/to/config.js`.
 ```js
 // figma-exporter.config.js
 export default {
-  fileId: 'abc123xyz',
-  outputDir: './src/assets/icons',
-  canvas: 'Icons',
-  frame: 'Export',
-  entityTypeForExport: 'components',
+  fileId: "abc123xyz",
+  outputDir: "./src/assets/icons",
+  canvas: "Icons",
+  frame: "Export",
+  entityTypeForExport: "components",
   clearOutputDir: true,
 
-  typeName: 'IconName',
+  typeName: "IconName",
 
   // API resilience
   batchSize: 50,
@@ -146,13 +152,13 @@ export default {
 ## Programmatic API
 
 ```ts
-import { exportFiles } from 'figma-exporter';
+import { exportFiles } from "figma-exporter";
 
 await exportFiles(process.env.FIGMA_TOKEN!, {
-  fileId: 'abc123xyz',
-  outputDir: './src/assets/icons',
-  canvas: 'Icons',
-  frame: 'Export',
+  fileId: "abc123xyz",
+  outputDir: "./src/assets/icons",
+  canvas: "Icons",
+  frame: "Export",
   clearOutputDir: true,
 });
 ```
@@ -160,8 +166,8 @@ await exportFiles(process.env.FIGMA_TOKEN!, {
 ### Exported types
 
 ```ts
-import type { Logger, LoggerOption } from 'figma-exporter';
-import { consoleLogger } from 'figma-exporter';
+import type { Logger, LoggerOption } from "figma-exporter";
+import { consoleLogger } from "figma-exporter";
 ```
 
 ## Logger customization
@@ -191,12 +197,12 @@ figma-exporter --no-log
 **Custom logger** — any object with `info`, `warn`, and `error` methods works:
 
 ```ts
-import type { Logger } from 'figma-exporter';
+import type { Logger } from "figma-exporter";
 
 const logger: Logger = {
-  info: msg => myLogger.info(msg),
-  warn: msg => myLogger.warn(msg),
-  error: msg => myLogger.error(msg),
+  info: (msg) => myLogger.info(msg),
+  warn: (msg) => myLogger.warn(msg),
+  error: (msg) => myLogger.error(msg),
 };
 
 await exportFiles(token, { ...config, logger });
