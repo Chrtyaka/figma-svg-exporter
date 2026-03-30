@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.1.0...v1.1.1) (2026-03-30)
+
+### Bug Fixes
+
+* **retry:** fix milliseconds, show hours ([dd77577](https://github.com/Chrtyaka/figma-svg-exporter/commit/dd775779b4e508b60c86f76078a24452112cdfe7))
+
 ## [1.1.0](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.0.4...v1.1.0) (2026-03-30)
 
 ### Features
