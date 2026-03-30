@@ -20,7 +20,15 @@ function getRetryDelay(error: unknown, attempt: number, initialDelay: number): n
     ?.headers?.['retry-after'];
 
   if (retryAfter) {
-    return Number(retryAfter) * 1000;
+    const value = Number(retryAfter);
+    if (!isNaN(value) && value > 0) {
+      // If value looks like a Unix timestamp (seconds), compute relative delay
+      const nowSeconds = Date.now() / 1000;
+      if (value > nowSeconds) {
+        return Math.ceil((value - nowSeconds) * 1000);
+      }
+      return value * 1000;
+    }
   }
 
   return initialDelay * 2 ** (attempt - 1);

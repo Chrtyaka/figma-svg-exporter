@@ -11,6 +11,7 @@
     "noUncheckedIndexedAccess": true,
     "moduleResolution": "Bundler",
     "module": "preserve",
+    "rootDir": "src",
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,

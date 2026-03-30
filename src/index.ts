@@ -7,6 +7,7 @@ import { processFiles } from './lib/process-files';
 import { generateFileNamesUnionType } from './lib/types-generator';
 import { resolveLogger } from './utils/resolve-logger';
 
+export type { ExporterConfig } from './types/config';
 export type { Logger, LoggerOption } from './types/logger';
 export { consoleLogger } from './lib/console-logger';
 
