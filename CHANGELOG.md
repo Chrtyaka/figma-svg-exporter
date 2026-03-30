@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.0.2...v1.0.3) (2026-03-30)
+
+### Bug Fixes
+
+* **build:** fix build size and deps ([4c4f4a7](https://github.com/Chrtyaka/figma-svg-exporter/commit/4c4f4a7a12cf8f1e5dd8ed91898afc09ce65e93b))
+
 ## [1.0.2](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.0.1...v1.0.2) (2026-03-30)
 
 ### Bug Fixes
