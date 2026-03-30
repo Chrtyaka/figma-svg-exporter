@@ -1,17 +1,8 @@
 {
   "name": "figma-svg-exporter",
+  "version": "0.0.0",
   "description": "Export SVG assets from Figma with SVGO optimization and TypeScript type generation",
   "author": "Slava Cherkesov",
-  "version": "0.0.0",
-  "scripts": {
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix",
-    "type-check": "tsc --noEmit",
-    "prettier": "prettier --write --ignore-unknown",
-    "build": "bun run build.ts && tsc"
-  },
-  "main": "dist/index.js",
-  "types": "dist/types/index.d.ts",
   "bin": {
     "figma-svg-exporter": "dist/cli.js"
   },
@@ -19,24 +10,15 @@
     "dist"
   ],
   "type": "module",
-  "devDependencies": {
-    "@commitlint/cli": "^20.0.0",
-    "@commitlint/config-conventional": "^20.0.0",
-    "@eslint/js": "^9.39.4",
-    "@jest/globals": "^29.7.0",
-    "@types/bun": "^1.3.11",
-    "@types/node": "^22.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "@vercel/ncc": "^0.38.0",
-    "eslint": "^9.0.0",
-    "jest": "^29.7.0",
-    "lefthook": "^2.0.0",
-    "prettier": "^3.0.0",
-    "ts-jest": "^29.4.0",
-    "tsx": "^4.0.0",
-    "typescript": "^5.0.0",
-    "typescript-eslint": "^8.0.0"
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "lint": "oxlint ./src",
+    "lint:fix": "oxlint --fix ./src",
+    "type-check": "tsc --noEmit",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "build": "bun run build.ts && tsc"
   },
   "dependencies": {
     "commander": "^14.0.3",
@@ -44,6 +26,21 @@
     "figma-transformer": "^2.1.0",
     "node-fetch": "^3.3.2",
     "svgo": "^4.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.0.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@jest/globals": "^29.7.0",
+    "@types/bun": "^1.3.11",
+    "@types/node": "^22.0.0",
+    "@vercel/ncc": "^0.38.0",
+    "jest": "^29.7.0",
+    "lefthook": "^2.0.0",
+    "oxfmt": "^0.42.0",
+    "oxlint": "^1.57.0",
+    "ts-jest": "^29.4.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
   },
   "peerDependencies": {
     "figma-js": "1.x",
