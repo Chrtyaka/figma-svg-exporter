@@ -26,6 +26,8 @@ export type ExporterConfig = {
   requestDelay?: number;
   /** Max concurrent SVG file downloads. Default: 5 */
   downloadConcurrency?: number;
+  /** Name for the generated TypeScript union type. Default: 'SvgIcons' */
+  typeName?: string;
 };
 
 export type DownloadConfig = Pick<
