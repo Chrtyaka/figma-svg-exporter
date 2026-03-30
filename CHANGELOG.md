@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.0.4...v1.1.0) (2026-03-30)
+
+### Features
+
+* **skip_existing:** add feature to skip already loaded files ([d32c560](https://github.com/Chrtyaka/figma-svg-exporter/commit/d32c5609820d11ee0d3f5ad25ab7d4abcedd4bf4))
+
 ## [1.0.4](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.0.3...v1.0.4) (2026-03-30)
 
 ### Bug Fixes
