@@ -1,10 +1,10 @@
-import type { Node } from 'figma-js';
+import type { Node } from '@figma/rest-api-spec';
 import type { LoggerOption } from './logger';
 
 type NodeFilterFunction = (node: Node) => boolean;
 type NodeFilterParam = string | NodeFilterFunction;
 
-type ExportableEntities = 'components' | 'instances';
+export type ExportableEntities = 'components' | 'instances';
 
 type ExportableEntitiesArray = ExportableEntities[];
 
