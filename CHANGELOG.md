@@ -1,3 +1,14 @@
+## [1.2.0](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.1.1...v1.2.0) (2026-09-21)
+
+### Features
+
+* remove outdated depencies. move to local setup ([f0c2cc1](https://github.com/Chrtyaka/figma-svg-exporter/commit/f0c2cc1bbe4c47c219c900ba6a8c890c08688b41))
+
+### Bug Fixes
+
+* **release:** downgrade conventionalcommits preset to 9.3.1 ([f312c92](https://github.com/Chrtyaka/figma-svg-exporter/commit/f312c92bbae1ebc3df99060d921cad0ad0f2a1f9))
+* remove npm token ([badd919](https://github.com/Chrtyaka/figma-svg-exporter/commit/badd919a6d5a87c2a67ddf562a92f62e508ba5c2))
+
 ## [1.1.1](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.1.0...v1.1.1) (2026-03-30)
 
 ### Bug Fixes
