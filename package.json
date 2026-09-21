@@ -3,6 +3,10 @@
   "version": "1.2.0",
   "description": "Export SVG assets from Figma with SVGO optimization and TypeScript type generation",
   "author": "Slava Cherkesov",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chrtyaka/figma-svg-exporter.git"
+  },
   "bin": {
     "figma-svg-exporter": "dist/cli.js"
   },
