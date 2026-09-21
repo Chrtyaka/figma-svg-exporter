@@ -1,9 +1,12 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, rmSync, writeFileSync } from 'fs';
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf-8')) as {
   dependencies?: Record<string, string>;
   peerDependencies?: Record<string, string>;
 };
+
+// Drop stale artifacts from previous builds — everything in dist gets published
+rmSync('dist', { recursive: true, force: true });
 
 const external = [
   ...Object.keys(pkg.dependencies ?? {}),

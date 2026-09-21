@@ -19,7 +19,7 @@
     "test": "vitest run",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "build": "bun run build.ts && tsc",
+    "build": "bun run build.ts && tsc -p tsconfig.build.json",
     "release": "semantic-release"
   },
   "publishConfig": {
