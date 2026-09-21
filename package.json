@@ -1,6 +1,6 @@
 {
   "name": "figma-svg-exporter",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Export SVG assets from Figma with SVGO optimization and TypeScript type generation",
   "author": "Slava Cherkesov",
   "repository": {

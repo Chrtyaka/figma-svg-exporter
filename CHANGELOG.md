@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.2.0...v1.2.1) (2026-09-21)
+
+### Bug Fixes
+
+* **release:** add repository field for npm provenance ([f2aca31](https://github.com/Chrtyaka/figma-svg-exporter/commit/f2aca31a3b6520e28cd679cd1d354bb2fa15a4c3))
+
 ## [1.2.0](https://github.com/Chrtyaka/figma-svg-exporter/compare/v1.1.1...v1.2.0) (2026-09-21)
 
 ### Features
