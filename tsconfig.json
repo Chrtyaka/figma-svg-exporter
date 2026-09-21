@@ -17,7 +17,8 @@
     "declarationMap": true,
     "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
-    "lib": ["es2022"]
+    "lib": ["es2022"],
+    "types": ["node"]
   },
   "include": ["src"]
 }
