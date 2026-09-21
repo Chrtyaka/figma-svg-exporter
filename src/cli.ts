@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'fs';
 import { Command } from 'commander';
 import { exportFiles } from './index.js';
 import type { ExporterConfig } from './types/config.js';
-import pkg from '../package.json' assert { type: 'json' };
+import pkg from '../package.json' with { type: 'json' };
 
 // ── Config file ──────────────────────────────────────────────────────────────
 

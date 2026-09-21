@@ -1,15 +1,13 @@
-import type { ClientInterface } from 'figma-js';
+import type { FigmaClient } from './figma-client';
 import { ExporterConfig } from '../types/config';
 import { ExporterSvgReturn, SvgItem } from '../types/svg';
-import { processFile } from 'figma-transformer';
-import type { ProcessedFile } from 'figma-transformer';
-import { findCanvas, findFrameInCanvas } from '../utils/process-figma-file';
+import { findCanvas, findEntities, findFrameInCanvas } from '../utils/process-figma-file';
 import { ExportableEntity } from '../types/figma-file';
 import type { Logger } from '../types/logger';
 import { withRetry, sleep } from '../utils/retry';
 
 const mapBatchImagesToNodes = (
-  imageUrls: Record<string, string>,
+  imageUrls: Record<string, string | null>,
   entities: ExportableEntity[],
 ): SvgItem[] => {
   return Object.entries(imageUrls).map(([key, url]) => {
@@ -18,12 +16,12 @@ const mapBatchImagesToNodes = (
     const id = entity?.id ?? '';
     const name = entity?.name ?? '';
 
-    return { id, name, url };
+    return { id, name, url: url ?? '' };
   });
 };
 
 export async function importFiles(
-  client: ClientInterface,
+  client: FigmaClient,
   config: ExporterConfig,
   logger: Logger,
 ): Promise<ExporterSvgReturn> {
@@ -44,17 +42,15 @@ export async function importFiles(
   logger.info(`Stage 1/4: Fetching Figma file ${fileId}...`);
 
   const fileData = await withRetry(() => client.file(fileId), retryOptions);
-  const { lastModified } = fileData.data;
+  const { lastModified, document } = fileData;
 
   logger.info(`Figma file fetched (last modified: ${lastModified})`);
 
-  const processedFile: ProcessedFile = processFile(fileData.data, fileId);
-
-  let canvas = config.canvas ? findCanvas(processedFile, config.canvas) : processedFile;
+  let canvas = config.canvas ? findCanvas(document, config.canvas) : document;
 
   if (canvas === undefined) {
     logger.warn(`Canvas "${config.canvas}" not found — using root file`);
-    canvas = processedFile;
+    canvas = document;
   }
 
   const frame = config.frame ? findFrameInCanvas(canvas, config.frame) : canvas;
@@ -64,15 +60,10 @@ export async function importFiles(
     return { items: [], lastModified };
   }
 
-  const { shortcuts } = frame;
-
-  if (!shortcuts) {
-    return { items: [], lastModified };
-  }
-
-  const entities = Array.isArray(entityForExport)
-    ? entityForExport.map(item => shortcuts[item]).flat()
-    : shortcuts[entityForExport];
+  const entities = findEntities(
+    frame,
+    Array.isArray(entityForExport) ? entityForExport : [entityForExport],
+  );
 
   logger.info(`Found ${entities.length} ${entityForExport} to export`);
 
@@ -104,7 +95,7 @@ export async function importFiles(
   }
 
   const images = responses
-    .map(item => item.data.images)
+    .map(item => item.images)
     .flat()
     .map(item => mapBatchImagesToNodes(item, entities))
     .flat();
