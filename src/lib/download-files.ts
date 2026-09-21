@@ -1,6 +1,4 @@
 import { ExporterSvgReturn, SvgItem } from '../types/svg';
-
-import fetch from 'node-fetch';
 import { DownloadConfig } from '../types/config';
 import { createDirectory, cleanDirectory, writeFiles } from '../utils/file-utils';
 import { FetchedFile, SavedFile } from '../types/files';

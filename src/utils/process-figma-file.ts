@@ -1,23 +1,52 @@
-import { ProcessedFile } from 'figma-transformer';
-import { CanvasNode, FindCanvasFilter, FindFrameFilter, FrameNode } from '../types/figma-file';
+import type { DocumentNode, Node } from '@figma/rest-api-spec';
+import type { ExportableEntities } from '../types/config';
+import {
+  CanvasNode,
+  ExportableEntity,
+  FindCanvasFilter,
+  FindFrameFilter,
+  FrameNode,
+} from '../types/figma-file';
 
-export function findCanvas(file: ProcessedFile, filter: FindCanvasFilter): CanvasNode | undefined {
-  const children = file.shortcuts.pages;
+const ENTITY_NODE_TYPES = {
+  components: 'COMPONENT',
+  instances: 'INSTANCE',
+} as const;
 
-  return children.find(item => item.name === filter);
+// Pre-order traversal of all nested nodes, at any depth
+function* walkDescendants(node: Node): Generator<Node> {
+  if (!('children' in node)) return;
+
+  for (const child of node.children) {
+    yield child;
+    yield* walkDescendants(child);
+  }
+}
+
+export function findCanvas(
+  document: DocumentNode,
+  filter: FindCanvasFilter,
+): CanvasNode | undefined {
+  return document.children.find(item => item.name === filter);
 }
 
 export function findFrameInCanvas(
-  canvas: CanvasNode | ProcessedFile,
+  canvas: CanvasNode | DocumentNode,
   filter: FindFrameFilter,
 ): FrameNode | undefined {
-  const children = canvas.shortcuts?.frames;
-
-  if (children === undefined) {
-    return undefined;
+  for (const node of walkDescendants(canvas)) {
+    if (node.type === 'FRAME' && node.name === filter) return node;
   }
 
-  if (typeof filter === 'string') {
-    return children.find(item => item.name === filter);
-  }
+  return undefined;
+}
+
+export function findEntities(root: Node, entityTypes: ExportableEntities[]): ExportableEntity[] {
+  const descendants = [...walkDescendants(root)];
+
+  return entityTypes.flatMap(entityType =>
+    descendants.filter(
+      (node): node is ExportableEntity => node.type === ENTITY_NODE_TYPES[entityType],
+    ),
+  );
 }

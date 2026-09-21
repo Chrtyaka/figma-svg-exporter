@@ -9,17 +9,13 @@ export function sleep(ms: number): Promise<void> {
 }
 
 function is429(error: unknown): boolean {
-  return (
-    (error as { response?: { status?: number } })?.response?.status === 429 ||
-    (error as { status?: number })?.status === 429
-  );
+  return (error as { status?: number })?.status === 429;
 }
 
 const MAX_RETRYABLE_DELAY_MS = 60_000;
 
 function getRetryAfterMs(error: unknown): number | null {
-  const retryAfter = (error as { response?: { headers?: { 'retry-after'?: string } } })?.response
-    ?.headers?.['retry-after'];
+  const retryAfter = (error as { retryAfter?: string | null })?.retryAfter;
 
   if (!retryAfter) return null;
 

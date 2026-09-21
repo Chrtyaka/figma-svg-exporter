@@ -1,7 +1,7 @@
-import * as Figma from 'figma-js';
 import path from 'path';
 import { ExporterConfig } from './types/config';
 import { downloadFiles } from './lib/download-files';
+import { createFigmaClient } from './lib/figma-client';
 import { importFiles } from './lib/import-files';
 import { processFiles } from './lib/process-files';
 import { generateFileNamesUnionType } from './lib/types-generator';
@@ -14,9 +14,7 @@ export { consoleLogger } from './lib/console-logger';
 export async function exportFiles(token: string, config: ExporterConfig) {
   const logger = resolveLogger(config.logger);
 
-  const client = Figma.Client({
-    personalAccessToken: token,
-  });
+  const client = createFigmaClient(token);
 
   const outputDir = path.resolve(config.outputDir);
 
